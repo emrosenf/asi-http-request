@@ -284,6 +284,10 @@ typedef void (^ASIDataBlock)(NSData *data);
 	// This lock prevents the operation from being cancelled at an inopportune moment
 	NSRecursiveLock *cancelledLock;
 	
+	// Added by Evan
+	// Called on the delegate (if implemented) when the content length is received
+	SEL didReceiveHeadLengthSelector;
+	
 	// Called on the delegate (if implemented) when the request starts. Default is requestStarted:
 	SEL didStartSelector;
 	
@@ -917,6 +921,9 @@ typedef void (^ASIDataBlock)(NSData *data);
 @property (assign) SEL didFinishSelector;
 @property (assign) SEL didFailSelector;
 @property (assign) SEL didReceiveDataSelector;
+
+//Added by Evan
+@property (assign) SEL didReceiveHeadLengthSelector;
 @property (retain,readonly) NSString *authenticationRealm;
 @property (retain,readonly) NSString *proxyAuthenticationRealm;
 @property (retain) NSError *error;

@@ -2198,6 +2198,13 @@ static NSOperationQueue *sharedQueue = nil;
 				[[self mainRequest] incrementDownloadSizeBy:1];
 
 			} else {
+#if DEBUG_REQUEST_STATUS
+				NSLog(@"For url:%@\nContent-Length: %qu\n",[[theRequest url] absoluteString], length);
+#endif	
+				if ([self delegate] && [[self delegate] respondsToSelector:[self didReceiveHeadLengthSelector]])
+				{
+					[[self delegate] performSelector:[self didReceiveHeadLengthSelector] withObject:[NSNumber numberWithUnsignedLongLong:length]];
+				}
 				[theRequest setContentLength:length];
 				if ([self showAccurateProgress] && [self shouldResetDownloadProgress]) {
 					[theRequest incrementDownloadSizeBy:[theRequest contentLength]+[theRequest partialDownloadSize]];
@@ -4776,4 +4783,8 @@ static NSOperationQueue *sharedQueue = nil;
 @synthesize PACFileData;
 
 @synthesize isSynchronous;
+
+//Added by Evan
+@synthesize didReceiveHeadLengthSelector;
+
 @end
