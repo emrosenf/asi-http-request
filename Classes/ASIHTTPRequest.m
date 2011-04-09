@@ -1078,6 +1078,9 @@ static NSOperationQueue *sharedQueue = nil;
 
 - (void)startRequest
 {
+#if DEBUG_REQUEST_STATUS
+    NSLog(@"Request %@ is going to download from byte: %llu",self,[self partialDownloadSize]); 
+#endif
 	if ([self isCancelled]) {
 		return;
 	}
@@ -2262,6 +2265,9 @@ static NSOperationQueue *sharedQueue = nil;
 
 	CFRelease(message);
 	[self performSelectorOnMainThread:@selector(requestReceivedResponseHeaders:) withObject:[[[self responseHeaders] copy] autorelease] waitUntilDone:[NSThread isMainThread]];
+#if DEBUG_REQUEST_STATUS
+    NSLog(@"Request %@ received content length: %llu",self,[self contentLength]); 
+#endif
 }
 
 - (void)parseStringEncodingFromHeaders
