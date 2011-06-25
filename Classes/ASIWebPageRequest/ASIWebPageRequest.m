@@ -71,6 +71,10 @@ static NSMutableArray *requestsUsingXMLParser = nil;
 		[super markAsFinished];
 		return;
 	}
+    
+    // Evan moved this call to the top
+    [super requestFinished];
+    
 	webContentType = ASINotParsedWebContentType;
 	NSString *contentType = [[[self responseHeaders] objectForKey:@"Content-Type"] lowercaseString];
 	contentType = [[contentType componentsSeparatedByString:@";"] objectAtIndex:0];
@@ -81,7 +85,7 @@ static NSMutableArray *requestsUsingXMLParser = nil;
 		[self parseAsCSS];
 		return;
 	}
-	[super requestFinished];
+
 	[super markAsFinished];
 }
 

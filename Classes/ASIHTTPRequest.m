@@ -3090,6 +3090,10 @@ static NSOperationQueue *sharedQueue = nil;
 				return;
 			}
 		}
+        
+#if DEBUG_REQUEST_STATUS
+        NSLog(@"Read %d bytes (%qu total)", bytesRead, [self totalBytesRead]);
+#endif
 		
 		[self setTotalBytesRead:[self totalBytesRead]+bytesRead];
 		[self setLastActivityTime:[NSDate date]];
